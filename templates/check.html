@@ -1,0 +1,113 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" data-theme="coffee">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plagiarism Detector | Detect Plagiarism your text files.</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <link rel="icon" type="image/png" href="{% static 'images/logo2.png' %}" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="{% static 'tailwind/config.js' %}"></script>
+  </head>
+  <body>
+    <header
+      class="sticky top-0 left-0 w-full py-3 border-b border-b-white/10 z-50"
+    >
+      <div class="container">
+        <div class="flex items-center justify-between gap-5">
+          <div>
+            <img src="{% static 'images/logo2.png' %}" alt="Plagiarism Detector" class="w-16" />
+          </div>
+          <div class="relative group">
+            <button
+              type="button"
+              class="w-10 h-10 rounded-full overflow-hidden"
+            >
+              <img
+                src="{% static 'images/user.png' %}"
+                alt="user"
+                class="w-full h-full object-cover"
+              />
+            </button>
+            <ul
+              class="absolute -bottom-10 p-1.5 right:0 lg:left-0 rounded-md bg-white whitespace-nowrap opacity-0 invisible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-300"
+            >
+              <li class="block">
+                <a
+                  href="{% url 'logout' %}"
+                  class="text-xs font-medium block w-full px-3 py-1.5 rounded-md text-black hover:bg-black/10 select-none"
+                  ><i class="fa-solid fa-power-off me-1"></i> Sign Out</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section>
+      <div class="container">
+        <div
+          class="relative w-full min-h-[calc(100vh-70px)] flex items-center justify-center py-10"
+        >
+          <div
+            class="relative w-full max-w-lg border border-white/30 rounded-lg"
+          >
+            <div class="relative w-full p-5 border-b border-b-white/30">
+              <h2 class="text-xl font-bold">Check Plagiarism</h2>
+              <p class="text-sm">Enter your text files to check plagiarism</p>
+            </div>
+
+            <div class="relative w-full p-5">
+              <form
+                method="post"
+                enctype="multipart/form-data"
+                class="grid grid-cols-1 gap-5"
+              >
+                {% csrf_token %}
+                <div class="relative">
+                  <input
+                    type="file"
+                    name="file1"
+                    id="file1"
+                    accept=".txt"
+                    class="file-input file-input-bordered file-input-primary w-full"
+                    required
+                  />
+                </div>
+                <div class="relative">
+                  <input
+                    type="file"
+                    name="file2"
+                    id="file2"
+                    accept=".txt"
+                    class="file-input file-input-bordered file-input-primary w-full"
+                    required
+                  />
+                </div>
+                <div class="relative text-center">
+                  <button type="submit" class="btn btn-primary">
+                    Check Plagiarism
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,103 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" data-theme="coffee">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plagiarism Detector | Detect Plagiarism your text files.</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link rel="icon" type="image/png" href="{% static 'images/logo2.png' %}" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="{% static 'tailwind/config.js' %}"></script>
+  </head>
+  <body>
+    <header
+      class="sticky top-0 left-0 w-full py-3 border-b border-b-white/10 z-50"
+    >
+      <div class="container">
+        <div class="flex items-center justify-between gap-5">
+          <div>
+            <img src="{% static 'images/logo2.png' %}" alt="Plagiarism Detector" class="w-16" />
+          </div>
+          <div class="relative group">
+            <button
+              type="button"
+              class="w-10 h-10 rounded-full overflow-hidden"
+            >
+              <img
+                src="{% static 'images/user.png' %}"
+                alt="user"
+                class="w-full h-full object-cover"
+              />
+            </button>
+            <ul class="absolute -bottom-10 p-1.5 right:0 lg:left-0 rounded-md bg-white whitespace-nowrap opacity-0 invisible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-300">
+              <li class="block">
+                <a
+                  href="{% url 'logout' %}"
+                  class="text-xs font-medium block w-full px-3 py-1.5 rounded-md text-black hover:bg-black/10 select-none"
+                  ><i class="fa-solid fa-power-off me-1"></i> Sign Out</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section>
+      <div class="container">
+        <div
+          class="relative w-full min-h-[calc(100vh-70px)] flex flex-col items-center justify-center gap-y-10 py-10"
+        >
+          <div class="relative">
+            {% if similarity %}
+            <h2 class="text-3xl font-bold">Plagiarism Result:</h2>
+            {% else %}
+            <h2 class="text-3xl font-bold">Plagiarism Not Found:</h2>
+            {% endif %}
+          </div>
+          <div class="flex flex-col items-center justify-center gap-y-5">
+            <div
+              class="relative w-48 h-48 rounded-full flex items-center justify-center before:absolute before:left-1/2 before:top-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:w-full before:h-full before:rounded-full before:scale-90 before:bg-[#20161F]"
+              id="resultCounter"
+            >
+              <div class="relative text-2xl font-bold" id="resultNumber">
+                {{ similarity }}%
+              </div>
+            </div>
+
+            <div>{{ similarity }}% Plagiarism in the uploaded files.</div>
+          </div>
+          <div class="relative">
+            <a href="/check" class="btn btn-primary">Check New Files</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        var count = 0;
+        var counting = setInterval(function () {
+          if (count <= "{{ similarity }}") {
+            $("#resultNumber").text(count + "%");
+            $("#resultCounter").css(
+              "background",
+              `conic-gradient(#BE7E40 ${count}%, #000000 ${count}%)`
+            );
+            count++;
+          } else {
+            clearInterval(counting);
+          }
+        }, 20);
+      });
+    </script>
+  </body>
+</html>
